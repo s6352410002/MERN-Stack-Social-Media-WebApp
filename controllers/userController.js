@@ -224,19 +224,19 @@ const checkUserExistUpdateProfile = async (req , res) => {
         const userExistWithFirstName = await userModel.findOne({
             firstname
         });
-        const userExistWithLastName = await userModel.findOne({
-            lastname
-        });
+        // const userExistWithLastName = await userModel.findOne({
+        //     lastname
+        // });
         
-        if(userExistWithFirstName && userExistWithLastName && userExistWithFirstName._id.toString() !== userId && userExistWithLastName._id.toString() !== userId){
-            return res.status(400).json({msg: "fristname and lastname is already exist."});
-        }
+        // if(userExistWithFirstName && userExistWithLastName && userExistWithFirstName._id.toString() !== userId && userExistWithLastName._id.toString() !== userId){
+        //     return res.status(400).json({msg: "fristname and lastname is already exist."});
+        // }
         if(userExistWithFirstName && userExistWithFirstName._id.toString() !== userId){
             return res.status(400).json({msg: "fristname is already exist."});
         }
-        if(userExistWithLastName && userExistWithLastName._id.toString() !== userId){
-            return res.status(400).json({msg: "lastname is already exist."});
-        }
+        // if(userExistWithLastName && userExistWithLastName._id.toString() !== userId){
+        //     return res.status(400).json({msg: "lastname is already exist."});
+        // }
 
         return res.status(200).json({msg: "fristname or lastname is already use."});
     }catch(err){
