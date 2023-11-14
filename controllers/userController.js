@@ -218,6 +218,32 @@ const deleteCurrentProfileBgImg = async (req, res) => {
     }
 }
 
+const checkUserExistUpdateProfile = async (req , res) => {
+    try{
+        const { firstname , lastname , userId } = req.body;
+        const userExistWithFirstName = await userModel.findOne({
+            firstname
+        });
+        const userExistWithLastName = await userModel.findOne({
+            lastname
+        });
+        
+        if(userExistWithFirstName && userExistWithLastName && userExistWithFirstName._id.toString() !== userId && userExistWithLastName._id.toString() !== userId){
+            return res.status(400).json({msg: "fristname and lastname is already exist."});
+        }
+        if(userExistWithFirstName && userExistWithFirstName._id.toString() !== userId){
+            return res.status(400).json({msg: "fristname is already exist."});
+        }
+        if(userExistWithLastName && userExistWithLastName._id.toString() !== userId){
+            return res.status(400).json({msg: "lastname is already exist."});
+        }
+
+        return res.status(200).json({msg: "fristname or lastname is already use."});
+    }catch(err){
+        return res.status(500).json(err);
+    }
+}
+
 module.exports = {
     followAndUnFollow,
     getAllUsers,
@@ -227,4 +253,5 @@ module.exports = {
     updateOtherDetailOfUserByUserId,
     deleteCurrentProfileImg,
     deleteCurrentProfileBgImg,
+    checkUserExistUpdateProfile
 }

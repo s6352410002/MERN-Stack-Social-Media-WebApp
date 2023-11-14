@@ -676,11 +676,37 @@ const Profile = ({ setLogoutStatus }) => {
     });
   }
 
-  const updateUserInfoData = (e) => {
+  const updateUserInfoData = async (e) => {
     e.preventDefault();
     if (value > new Date()) {
       return toast.error("Your birth date is not valid.");
     }
+
+    try{
+      const userExistRes = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/checkUserExistUpdateProfile` , {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          userId: userDataRef?.current
+        })
+      });
+      const resMessage = await userExistRes.json();
+      
+      if(resMessage.msg === "fristname and lastname is already exist."){
+        return toast.error("Fristname and lastname is already exist.");
+      }else if(resMessage.msg === "fristname is already exist."){
+        return toast.error("Fristname is already exist.");
+      }else if(resMessage.msg === "lastname is already exist."){
+        return toast.error("Lastname is already exist.");
+      }
+    }catch(err){
+      console.log(`error ${err}`);
+    }
+
     setShowEffectWhileUpdateProfile(true);
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/updateOtherDetailOfUserByUserId/${userData.userId}`, {
       method: 'PUT',

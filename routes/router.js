@@ -159,6 +159,8 @@ router.put("/likeAndDislikeComment", commentControllers.likeAndDislikeComment);
 router.delete("/deleteCurrentProfileImg", userControllers.deleteCurrentProfileImg);
 router.delete("/deleteCurrentProfileBgImg", userControllers.deleteCurrentProfileBgImg);
 
+router.post("/checkUserExistUpdateProfile" , userControllers.checkUserExistUpdateProfile);
+
 // router.delete('/deleteMessage', messageControllers.deleteMsg);
 
 module.exports = router;
